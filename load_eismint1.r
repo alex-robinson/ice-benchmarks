@@ -24,20 +24,20 @@ load_eismint1_fixed = function(fldr)
     xHt1 = read.table(file.path(fldr,"EISMINT1-fixed_x-H_type1.txt"),header=TRUE)
     xHt2 = read.table(file.path(fldr,"EISMINT1-fixed_x-H_type2.txt"),header=TRUE)
 
-    # xuxy    = read.table(file.path(fldr,"EISMINT1-fixed_x-uxy_mean.txt"),header=TRUE)
+    xuxy    = read.table(file.path(fldr,"EISMINT1-fixed_x-uxy_mean_3D.txt"),header=TRUE)
     # xtprime = read.table(file.path(fldr,"EISMINT1-fixed_x-T_prime_base.txt"),header=TRUE)
 
     eis1 = data.frame(x=seq(0,750,by=10))
     eis1$Ht1          = approx(x=xHt1$x,y=xHt1$H,       xout=eis1$x,rule=2)$y 
     eis1$Ht2          = approx(x=xHt2$x,y=xHt2$H,       xout=eis1$x,rule=2)$y 
-    # eis1$uxy_mean     = approx(x=xuxy$x,y=xuxy$uxy_mean,xout=eis1$x,rule=2)$y 
+    eis1$uxy_mean     = approx(x=xuxy$x,y=xuxy$uxy_mean,xout=eis1$x,rule=2)$y 
     # eis1$T_prime_base = approx(x=xtprime$x,y=xtprime$T_prime_base,xout=eis1$x,rule=2)$y 
 
     return(eis1)
 }
 
 # Check data
-if (FALSE) {
+if (TRUE) {
 
     eis1m = load_eismint1_moving("./EISMINT1-moving/")
     eis1f = load_eismint1_fixed("./EISMINT1-fixed/")
