@@ -37,7 +37,7 @@ load_eismint1_fixed = function(fldr)
 }
 
 # Check data
-if (TRUE) {
+if (FALSE) {
 
     eis1m = load_eismint1_moving("./EISMINT1-moving/")
     eis1f = load_eismint1_fixed("./EISMINT1-fixed/")
