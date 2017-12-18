@@ -6,15 +6,23 @@ load_eismint1_moving = function(fldr)
     xHt2 = read.table(file.path(fldr,"EISMINT1-moving_x-H_type2.txt"),header=TRUE)
     xHe  = read.table(file.path(fldr,"EISMINT1-moving_x-H_exactmargin.txt"),header=TRUE)
     
-    xuxy    = read.table(file.path(fldr,"EISMINT1-moving_x-uxy_mean.txt"),header=TRUE)
-    xtprime = read.table(file.path(fldr,"EISMINT1-moving_x-T_prime_base.txt"),header=TRUE)
+    xuxy      = read.table(file.path(fldr,"EISMINT1-moving_x-uxy_mean.txt"),header=TRUE)
+    xtprime   = read.table(file.path(fldr,"EISMINT1-moving_x-T_prime_base.txt"),header=TRUE)
+    tprime    = read.table(file.path(fldr,"EISMINT1-moving_divide_T_prime.txt"),header=TRUE)
+    uz        = read.table(file.path(fldr,"EISMINT1-moving_divide_uz.txt"),header=TRUE)
 
-    eis1 = data.frame(x=seq(0,750,by=10))
+    eis1 = list(x=seq(0,750,by=10),s=seq(0,1,by=0.05))
+    
+    # Variables versus distance from divide x
     eis1$Ht1          = approx(x=xHt1$x,y=xHt1$H,       xout=eis1$x,rule=2)$y 
     eis1$Ht2          = approx(x=xHt2$x,y=xHt2$H,       xout=eis1$x,rule=2)$y 
     eis1$He           = approx(x=xHe$x, y=xHe$H,        xout=eis1$x,rule=2)$y 
     eis1$uxy_mean     = approx(x=xuxy$x,y=xuxy$uxy_mean,xout=eis1$x,rule=2)$y 
     eis1$T_prime_base = approx(x=xtprime$x,y=xtprime$T_prime_base,xout=eis1$x,rule=2)$y 
+
+    # Variables at divide versus normalized ice thickness sigma 
+    eis1$T_prime      = approx(x=tprime$sigma,y=tprime$T_prime,xout=eis1$s,rule=2)$y 
+    eis1$uz           = approx(x=uz$sigma,    y=uz$uz,         xout=eis1$s,rule=2)$y 
 
     return(eis1)
 }
